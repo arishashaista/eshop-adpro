@@ -25,6 +25,10 @@
             <td>
 
                 <a th:href="@{/product/edit/{id}(id=${product.productId})}" class="btn btn-primary btn-sm mb-3">Edit</a>
+                <form th:action="@{/product/delete/{id}(id=${product.productId})}" method="post">
+                    <input type="hidden" name="_method" value="DELETE"/>
+                    <button type="submit" class="btn btn-danger btn-sm mb-3">Delete</button>
+                </form>
         </tr>
         </tbody>
     </table>
