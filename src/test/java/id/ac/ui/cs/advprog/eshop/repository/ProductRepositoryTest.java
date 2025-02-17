@@ -171,4 +171,38 @@ class ProductRepositoryTest {
         Product findProduct1 = productRepository.findById("0");
         assertNull(findProduct1);
     }
+
+    @Test
+    void testFindByIdWhenProductDoesNotExist() {
+        Product foundProduct = productRepository.findById("0");
+        assertNull(foundProduct);
+    }
+
+    @Test
+    void testEditProductNonExistentWithoutCreatingProduct() {
+        Product product = new Product();
+        product.setProductId("0");
+        product.setProductName("Sampo Cap Bambang");
+        product.setProductQuantity(111);
+
+        Product editedProduct = productRepository.editProduct("0", product);
+        assertNull(editedProduct);
+    }
+
+    @Test
+    void testDeleteNonExistentProductWithoutCreating() {
+        boolean result = productRepository.deleteProduct("0");
+        assertFalse(result);
+    }
+
+    @Test
+    void testEditProductWhenRepositoryIsEmpty() {
+        Product editedProduct = new Product();
+        editedProduct.setProductId("123");
+        editedProduct.setProductName("Sampo Cap Bambang");
+        editedProduct.setProductQuantity(50);
+
+        Product result = productRepository.editProduct("123", editedProduct);
+        assertNull(result);
+    }
 }
