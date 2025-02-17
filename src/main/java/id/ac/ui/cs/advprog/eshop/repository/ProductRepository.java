@@ -28,6 +28,10 @@ public class ProductRepository {
     }
 
     public Product editProduct(String productId, Product editedProduct) {
+        if (editedProduct == null || productId == null) {
+            return null;
+        }
+
         for (int i = 0; i < productData.size(); i++) {
             if (productData.get(i).getProductId().equals(productId)) {
                 editedProduct.setProductId(productId);
