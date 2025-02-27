@@ -2,6 +2,7 @@
 
 - [Tutorial Modul 1](#tutorial-modul-1)
 - [Tutorial Modul 2](#tutorial-modul-2)
+- [Tutorial Modul 3](#tutorial-modul-3)
 
 Link Deployment: https://eshop-adpro-arishashaista.koyeb.app
 
@@ -50,7 +51,34 @@ Adapun hal yang dapat ditingkatkan pada kode yang diimplementasikan:
 
 
 2. Berdasarkan konfigurasi CI/CD yang telah dibuat, sistem ini sepenuhnya memenuhi definisi Continuous Integration (CI) dan Continuous Deployment (CD). Setiap kali ada push atau pull request, workflow `ci.yml` akan menjalankan unit test secara otomatis, `pmd.yml` akan melakukan analisis kode menggunakan PMD untuk memastikan kualitas kode tetap terjaga, dan `scorecard.yml` akan memeriksa keamanan proyek dengan OSSF Scorecard untuk mendeteksi potensi risiko. Dengan mekanisme ini, semua perubahan diuji dan dianalisis sebelum masuk ke _branch_ utama. Selain itu, karena `Koyeb` telah dikonfigurasi untuk _auto-deploy_ saat ada _push_ ke _branch_ tertentu, maka proses Continuous Deployment (CD) juga berjalan secara otomatis. Secara keseluruhan, implementasi CI/CD ini sudah optimal, karena semua perubahan diuji dan diverifikasi sebelum di-_deploy_ secara otomatis.
- 
+
+## Tutorial Modul 3
+### Reflection
+1. Dalam proyek ini, saya telah menerapkan beberapa prinsip SOLID sebagai berikut:
+   - **Single Responsibility Principle (SRP):** Memisahkan `CarController` dari `ProductController` sehingga `CarController` hanya menangani mobil dan `ProductController` hanya menangani produk. Selain itu, `CarServiceImpl` hanya menjalankan logika bisnis untuk mobil dan `CarRepository` hanya berfungsi sebagai layer akses data.
+   - **Open/Closed Principle (OCP):** `CarService.java` adalah _interface_, sehingga memungkinkan untuk menambahkan implementasi lain di masa depan tanpa harus mengubah `CarController`.
+   - **Liskov Substitution Principle (LSP):** `CarServiceImpl` mengimplementasikan `CarService`, dan `CarController` hanya bergantung pada `CarService`.
+   - **Interface Segregation Principle (ISP):** `CarService` hanya memiliki metode yang relevan dengan mobil.
+   - **Dependency Inversion Principle (DIP):** `CarController` bergantung pada _abstract_ `CarService`, bukan `CarServiceImpl`.
+
+
+2. Dengan **SRP**, `CarController` dipisahkan dari `ProductController`, sehingga lebih terorganisir. **OCP** memungkinkan penambahan fitur baru tanpa mengubah `CarController`. **DIP** membuat unit testing lebih mudah dengan menggunakan interface `CarService` dibandingkan jika bergantung langsung pada `CarServiceImpl`. **LSP** memastikan `CarServiceImpl` dapat diganti dengan implementasi lain tanpa mengubah kode yang menggunakannya. **ISP** menjaga _interface_ tetap sederhana dan relevan, memungkinkan penambahan fitur baru tanpa memodifikasi kode lama.
+
+
+3. Tanpa **SRP**, jika `CarController` masih menyatu dengan `ProductController`, perubahan pada satu fitur dapat berdampak pada fitur lain, menyebabkan kode sulit dipelihara. Jika **OCP** diabaikan, setiap kali ingin mengganti penyimpanan harus mengubah `CarController`, bukan hanya menambahkan implementasi baru. Tanpa **DIP**, `CarController` bergantung langsung pada `CarServiceImpl`, sehingga sulit untuk diuji secara terpisah dan rentan terhadap perubahan internal implementasi. Tanpa **LSP** dapat menyebabkan kode tidak fleksibel, misalnya jika ingin mengganti `CarServiceImpl` dengan `CarServiceMongoImpl`, perlu mengubah seluruh `CarController`. Tanpa **ISP**, _interface_ dapat menjadi terlalu besar dan sulit digunakan ulang.
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
