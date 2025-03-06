@@ -5,7 +5,6 @@ import id.ac.ui.cs.advprog.eshop.model.Product;
 import lombok.Getter;
 import lombok.Builder;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Builder
