@@ -3,6 +3,7 @@
 - [Tutorial Modul 1](#tutorial-modul-1)
 - [Tutorial Modul 2](#tutorial-modul-2)
 - [Tutorial Modul 3](#tutorial-modul-3)
+- [Tutorial Modul 4](#tutorial-modul-4)
 
 Link Deployment: https://eshop-adpro-arishashaista.koyeb.app
 
@@ -67,6 +68,21 @@ Adapun hal yang dapat ditingkatkan pada kode yang diimplementasikan:
 
 3. Tanpa **SRP**, jika `CarController` masih menyatu dengan `ProductController`, perubahan pada satu fitur dapat berdampak pada fitur lain, menyebabkan kode sulit dipelihara. Jika **OCP** diabaikan, setiap kali ingin mengganti penyimpanan harus mengubah `CarController`, bukan hanya menambahkan implementasi baru. Tanpa **DIP**, `CarController` bergantung langsung pada `CarServiceImpl`, sehingga sulit untuk diuji secara terpisah dan rentan terhadap perubahan internal implementasi. Tanpa **LSP** dapat menyebabkan kode tidak fleksibel, misalnya jika ingin mengganti `CarServiceImpl` dengan `CarServiceMongoImpl`, perlu mengubah seluruh `CarController`. Tanpa **ISP**, _interface_ dapat menjadi terlalu besar dan sulit digunakan ulang.
 
+## Tutorial Modul 4
+### Reflection 1
+1. Dengan menulis tes terlebih dahulu, dapat lebih memahami bagaimana sistem seharusnya bekerja sebelum mengimplementasikan fungsionalitasnya. Alur TDD membantu dalam mendefinisikan test yang relevan, sehingga dapat lebih fokus pada persyaratan bisnis dan bukan hanya aspek teknis kode. Karena menjalankan pengujian setelah setiap perubahan kecil, bug dapat ditemukan lebih cepat sebelum kode terlalu kompleks. Misalnya, saat menguji validasi status pada Order, ditemukan bahwa validasi status harus sesuai dengan OrderStatus enum. Pada awalnya, TDD terasa lebih lambat karena harus menulis pengujian sebelum implementasi. Namun, dalam jangka panjang, TDD mengurangi waktu debugging karena setiap fitur telah diuji sebelum diintegrasikan. Selain itu, pada alur TDD di kode ini, perlu ditingkatkan pengujian untuk menangani edge cases lebih baik, seperti menambahkan lebih banyak pengujian negatif untuk menangani input yang tidak valid. 
+2. - **Fast**
+     * Unit test yang dibuat berjalan dengan cepat karena hanya menguji satu unit kode tanpa ketergantungan pada database atau API eksternal.
+   - Independent
+     * Setiap pengujian dapat dijalankan secara terpisah tanpa bergantung pada urutan eksekusi tes lain.
+     * Mocking digunakan pada `OrderRepository` di `OrderServiceImplTest`, memastikan bahwa pengujian tidak bergantung pada implementasi spesifik.
+   - Repeatable
+     * Tes dapat dijalankan berulang kali tanpa bergantung pada kondisi eksternal, memastikan hasil yang konsisten.
+     * Misalnya, `OrderServiceTest` menggunakan Mockito untuk mengontrol return value, sehingga pengujian tidak bergantung pada keadaan sistem.
+   - Self-validating
+     * Tes menggunakan assertions yang jelas, seperti assertEquals() dan assertThrows(), sehingga hasilnya mudah dipahami tanpa perlu debugging manual.
+   - Timely
+     * Sebagian besar tes ditulis bersamaan dengan pengembangan kode, tetapi beberapa edge cases baru ditemukan setelah implementasi.
 
 
 
